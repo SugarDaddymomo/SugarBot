@@ -8,7 +8,10 @@ public class Gaali extends ListenerAdapter {
 
     static final List<String> GAALI = Arrays.asList("bsdk", "bc", "randi",
             "gaand", "mkc", "saale", "bhadwe",
-            "chutiye", "bkl", "chutiya");
+            "chutiye", "bkl", "chutiya",
+            "mf", "asshole", "motherfucker", "behenchod",
+            "nigga", "bitch", "cunt",
+            "bitch ass nigga");
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {

@@ -18,10 +18,10 @@ public class CommandPlay extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        String commandReal = event.getMessage().getContentRaw().substring(0, 5);
-        String restCommand = event.getMessage().getContentRaw().substring(6);
+        String restCommand = "";
 
-        if (Objects.equals(commandReal, "$play")) {
+
+        if (event.getMessage().getContentRaw().contains("$play") && event.getMessage().getContentRaw().length() == 5) {
             if (!event.getMember().getVoiceState().inAudioChannel()) {
                 event.getChannel().sendMessage("You need to be in voice channel for this command to work!").queue();
             }
@@ -34,14 +34,14 @@ public class CommandPlay extends ListenerAdapter {
                 logger.error("error bhau");
             }
 
-            String link = String.join(" ", restCommand);
-
-            if (!isURL(link)) {
-                link = "ytsearch:"+link+" audio";
-            }
-            logger.info(link);
-            PlayerManager.getINSTANCE().loadAndPlay(event.getChannel().asTextChannel(), link);
-        } else if (Objects.equals(commandReal, "$leave")) {
+//            String link = String.join(" ", restCommand);
+//
+//            if (!isURL(link)) {
+//                link = "ytsearch:"+link+" audio";
+//            }
+//            logger.info(link);
+//            PlayerManager.getINSTANCE().loadAndPlay(event.getChannel().asTextChannel(), link);
+        } else if (event.getMessage().getContentRaw().contains("$leave")) {
             logger.info("leave krna h?");
             if (!event.getMember().getVoiceState().inAudioChannel()) {
                 event.getChannel().sendMessage("You need to be in voice channel for this command to work!").queue();
@@ -52,6 +52,24 @@ public class CommandPlay extends ListenerAdapter {
                 audioManager.closeAudioConnection();
             } catch (Exception e) {
                 logger.error("error bhau");
+            }
+        } else if (event.getMessage().getContentRaw().contains("$play") && event.getMessage().getContentRaw().length()>5) {
+            final AudioManager audioManager = event.getGuild().getAudioManager();
+            final VoiceChannel voiceChannel = (VoiceChannel) event.getMember().getVoiceState().getChannel();
+
+            try {
+                audioManager.openAudioConnection(voiceChannel);
+            } catch (Exception e) {
+                logger.error("error bhau");
+            }
+            restCommand = event.getMessage().getContentRaw().substring(6);
+            if (!isURL(restCommand)) {
+                String link = "ytsearch:"+restCommand+" audio";
+                logger.info(link);
+                PlayerManager.getINSTANCE().loadAndPlay(event.getChannel().asTextChannel(), link);
+            } else {
+                logger.info(restCommand);
+                PlayerManager.getINSTANCE().loadAndPlay(event.getChannel().asTextChannel(), restCommand);
             }
         }
     }

@@ -17,10 +17,18 @@ Below are the currently supported commands:
 
 *Music :musical_note: related commands*
 
+`$musicHelp` will show the music related help section
+
 Below command will play Diljit Dosanjh's Lemonade Track 
 into discord audio channel you are in.
 
 `$play lemonade diljit dosanjh`
+
+`$play some youtube link` will play that video's audio
+
+`$leave` will disconnect the bot from the audio channel
+
+`$play` will join the bot in the audio channel
 
 As you add more songs all of them will be queued into the player.
 
