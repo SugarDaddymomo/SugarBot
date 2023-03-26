@@ -1,21 +1,25 @@
 package com.sugardaddy.sugarbot;
 
-import com.sugardaddy.sugarbot.commands.Menu;
+import com.sugardaddy.sugarbot.commands.*;
 import com.sugardaddy.sugarbot.events.Gaali;
 import com.sugardaddy.sugarbot.events.HelloEvent;
-import com.sugardaddy.sugarbot.music.CommandPlay;
+import com.sugardaddy.sugarbot.events.MemberJoinEvent;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import se.michaelthelin.spotify.SpotifyApi;
 
 @SpringBootApplication
 public class SugarBotApplication implements CommandLineRunner {
 
     @Autowired
     JDA jda;
+
+    @Autowired
+    SpotifyApi api;
 
     public static void main(String[] args) {
 
@@ -37,7 +41,15 @@ public class SugarBotApplication implements CommandLineRunner {
         jda.addEventListener(new HelloEvent());
         jda.addEventListener(new Menu());
         jda.addEventListener(new Gaali());
-        jda.addEventListener(new CommandPlay());
         jda.getPresence().setActivity(Activity.watching("SERVER"));
+        jda.addEventListener(new MemberJoinEvent());
+        jda.addEventListener(new PlayOneCommand());
+        jda.addEventListener(new JoinCommand());
+        jda.addEventListener(new StopCommand());
+        jda.addEventListener(new PlayAllCommand());
+        jda.addEventListener(new LeaveCommand());
+        jda.addEventListener(new SkipCommand());
+        jda.addEventListener(new NowPlayingCommand());
+//        jda.addEventListener(new QueueCommand());
     }
 }

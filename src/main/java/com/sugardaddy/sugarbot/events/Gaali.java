@@ -18,8 +18,10 @@ public class Gaali extends ListenerAdapter {
         if (!event.getMessage().getAuthor().isBot()) {
             Random random = new Random();
             List<String> list = Arrays.asList(event.getMessage().getContentRaw().split(" "));
+            String small = "";
             for (String s : list) {
-                if (GAALI.contains(s)) {
+                small = s.toLowerCase();
+                if (GAALI.contains(small)) {
                     event.getChannel().sendMessage(GAALI.get(random.nextInt((GAALI.size())))+" "+event.getAuthor().getName()).queue();
                     break;
                 }
